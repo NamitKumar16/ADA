@@ -1,56 +1,76 @@
 package ADA;
 
-import java.util.Scanner;
+import java.util.*;
 
-public class NQueen {
+class NQueen
+{
+    private static int N;
 
-    static int x[];
+    private static int[][] board = new int[100][100];
 
-    public static boolean place(int k) {
-        int i;
-        for (i = 1; i < k; i++) {
-            if ((x[i] == x[k]) || ((x[i] - x[k]) == (i - k))) {
-                return false;
-            }
+
+    private static boolean isAttack(int i,int j)
+    {
+        int k,l;
+
+        for(k=0;k<N;k++)
+        {
+            if((board[i][k] == 1) || (board[k][j] == 1))
+                return true;
         }
-        return true;
-    }
 
-    public static void nQueen(int n) {
-        x = new int[n + 1];
-        int k = 1;
-        x[k] = 0;
-        while (k > 0) {
-            x[k] = x[k] + 1;
-            while (x[k] <= n && !place(k)) {
-                x[k] = x[k] + 1;
-            }
-            if (x[k] <= n) {
-                if (k == n) {
-                    System.out.println("For " + n + " queens: ");
-                    for (int j = 1; j <= n; j++) {
-                        System.out.print(x[j] + " ");
-                    }
-                    break;
-                } else {
-                    k = k + 1;
-                    x[k] = 0;
+        for(k=0;k<N;k++)
+        {
+            for(l=0;l<N;l++)
+            {
+                if(((k+l) == (i+j)) || ((k-l) == (i-j)))
+                {
+                    if(board[k][l] == 1)
+                        return true;
                 }
-            } else {
-                k = k - 1;
             }
         }
+        return false;
     }
 
-    public static void main(String[] args) {
-        // TODO Auto-generated method stub
+    private static boolean nQueen(int n)
+    {
+        int i,j;
 
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Enter a number: ");
-        int n = sc.nextInt();
-        nQueen(n);
-        sc.close();
-
+        if(n==0)
+            return true;
+        for(i=0;i<N;i++)
+        {
+            for(j=0;j<N;j++)
+            {
+                if((!isAttack(i,j)) && (board[i][j]!=1))
+                {
+                    board[i][j] = 1;
+                    if(nQueen(n-1)==true)
+                    {
+                        return true;
+                    }
+                    board[i][j] = 0;
+                }
+            }
+        }
+        return false;
     }
 
+    public static void main(String[] args)
+    {
+        Scanner s = new Scanner(System.in);
+        System.out.println("Enter the value of N for NxN chessboard");
+        N = s.nextInt();
+
+        int i,j;
+        nQueen(N);
+        for(i=0;i<N;i++)
+        {
+            for(j=0;j<N;j++)
+                System.out.print(board[i][j]+"\t");
+            System.out.print("\n");
+        }
+
+    }
 }
