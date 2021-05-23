@@ -55,6 +55,7 @@ public class TSP{
         }
         System.out.println("1");
         System.out.println("Min cost: " + cost);
+        
     }
 }
 
