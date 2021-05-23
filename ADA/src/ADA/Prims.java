@@ -1,6 +1,5 @@
 package ADA;
 
-import java.util.Arrays;
 import java.util.*;
 
 class Prims {
