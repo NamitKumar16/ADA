@@ -21,7 +21,6 @@ public class Bellman_Ford {
             }
         }
 
-
         for (int i = 0; i < E; i++)
         {
             int x = G[i][0];
